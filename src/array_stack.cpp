@@ -24,11 +24,14 @@ namespace assignment {
   }
 
   void ArrayStack::Push(int value) {
-    if (size_ == capacity_) {
-      Resize(capacity_ + kCapacityGrowthCoefficient);
+    if (size_ >= 0) {
+      if (size_ == capacity_) {
+        Resize(capacity_ + kCapacityGrowthCoefficient);
+      }
+      data_[size_] = value;
+      size_ += 1;
     }
-    data_[size_ + 1] = value;
-    }
+  }
 
   bool ArrayStack::Pop() {
     if (size_ > 0){
@@ -44,7 +47,8 @@ namespace assignment {
 
   std::optional<int> ArrayStack::Peek() const {
     if (size_ > 0){
-      return  data_[size_];
+      int value = data_[size_-1];
+      return  value;
     }
     return std::nullopt;
   }
