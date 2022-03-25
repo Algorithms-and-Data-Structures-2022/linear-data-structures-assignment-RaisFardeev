@@ -36,15 +36,20 @@ namespace assignment {
   }
 
   bool DynamicArray::Insert(int index, int value) {
-    if (index >= 0 and index < size_) {
+    if (index >= 0 and index <= size_) {
+      if (size_ == capacity_){
+        Resize(capacity_ + kCapacityGrowthCoefficient);
+      }
       int* newdata = new int[capacity_];
-      for (int i = 0; i < index; i++)
-        newdata[i] = data_[i];
-      Add(value);
-      for (int i = newdata[value]; i < size_; i++) {
+      for (int i = 0; i < index; i++) {
         newdata[i] = data_[i];
       }
+      newdata[index] = value;
+      for (int i = index; i <= size_; i++) {
+        newdata[i+1] = data_[i];
+      }
       data_ = newdata;
+      size_ += 1;
       return true;
     }
     return false;
